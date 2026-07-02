@@ -346,6 +346,9 @@ body {
 }
 
 /* Follow-up chips (appear below AI replies) — slightly smaller */
+.followup-chips {
+    margin-bottom: 15px;
+}
 .followup-chips .suggestion-chip {
     font-size: 11px;
     padding: 5px 11px;
