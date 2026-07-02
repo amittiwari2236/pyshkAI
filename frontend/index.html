@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PYSHK AI Smart Assistant</title>
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32.png' %}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{% static 'favicon-192.png' %}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=3">
+</head>
+<body>
+    
+    <!-- Floating Action Button to open chat -->
+    <div class="chat-fab" id="chat-fab">
+        <img src="{% static 'img/pyshk-logo.png' %}" alt="PYSHK Logo" class="fab-logo" onerror="this.onerror=null; this.src='https://pyshk.com/wp-content/uploads/2024/06/1.-logo-with-tagline-png-small-2.png';">
+    </div>
+
+    <!-- Main Chat Window -->
+    <div class="chat-window hidden" id="chat-window">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-info">
+                <div class="bot-avatar">
+                    <img src="{% static 'img/pyshk-logo.png' %}" alt="PYSHK Logo" class="avatar-logo" onerror="this.onerror=null; this.src='https://pyshk.com/wp-content/uploads/2024/06/1.-logo-with-tagline-png-small-2.png';">
+                    <div class="online-indicator"></div>
+                </div>
+                <div class="header-text">
+                    <h2>PYSHK Assistant</h2>
+                    <p>Always here to help</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="theme-toggle" class="icon-btn" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+                <button id="lang-toggle" class="icon-btn" title="Switch Language"><i class="fa-solid fa-language"></i></button>
+                <button id="fullscreen-toggle" class="icon-btn" title="Full Screen"><i class="fa-solid fa-expand"></i></button>
+                <button id="close-chat" class="icon-btn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-body" id="chat-body">
+            <!-- Messages will be appended here -->
+            <div class="message ai-message">
+                <div class="message-content">
+                    <p>Welcome to PYSHK! 👋 I am your AI Smart Assistant.</p>
+                    <p>How can I guide you today? You can ask me about:</p>
+                </div>
+            </div>
+            
+            <!-- Quick Suggestion Chips -->
+            <div class="suggestions-container" id="suggestions-container">
+                <button class="suggestion-chip" data-query="What courses does PYSHK offer?">📚 Courses</button>
+                <button class="suggestion-chip" data-query="Tell me about the admission process">📝 Admissions</button>
+                <button class="suggestion-chip" data-query="What are the fees?">💰 Fees</button>
+                <button class="suggestion-chip" data-query="Tell me about the teachers">👨‍🏫 Teachers</button>
+                <button class="suggestion-chip" data-query="What are the class schedules?">🗓️ Schedules</button>
+                <button class="suggestion-chip" data-query="Tell me about yoga guidance">🧘 Yoga</button>
+                <button class="suggestion-chip" data-query="What certifications are available?">🏅 Certifications</button>
+                <button class="suggestion-chip" data-query="Show me the FAQs">❓ FAQs</button>
+                <button class="suggestion-chip" data-query="How can I contact PYSHK?">📞 Contact</button>
+            </div>
+            <!-- Typing Indicator (Hidden by default) -->
+            <div class="typing-indicator hidden" id="typing-indicator">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-footer">
+            <div class="input-wrapper">
+                <button id="voice-btn" class="icon-btn voice-btn"><i class="fa-solid fa-microphone"></i></button>
+                <textarea id="chat-input" placeholder="Type your question..." rows="1"></textarea>
+                <button id="send-btn" class="icon-btn send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+            <div class="footer-branding">
+                Powered by PYSHK AI
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="{% static 'js/api.js' %}?v=3"></script>
+    <script src="{% static 'js/chat.js' %}?v=3"></script>
+    <script src="{% static 'js/app.js' %}?v=3"></script>
+</body>
+</html>

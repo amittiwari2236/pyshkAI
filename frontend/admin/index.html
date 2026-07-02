@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PYSHK Custom CMS</title>
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/static/favicon-192.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Quill.js for Rich Text -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <!-- Custom Admin CSS -->
+    <link rel="stylesheet" href="/static/admin/css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>PYSHK CMS</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" data-view="dashboard" class="active"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="#" data-view="courses"><i class="fa-solid fa-book"></i> Courses</a></li>
+                    <li><a href="#" data-view="admissions"><i class="fa-solid fa-user-graduate"></i> Admissions</a></li>
+                    <li><a href="#" data-view="fees"><i class="fa-solid fa-money-check-dollar"></i> Fees Structure</a></li>
+                    <li><a href="#" data-view="certifications"><i class="fa-solid fa-certificate"></i> Certifications</a></li>
+                    <li><a href="#" data-view="teachers"><i class="fa-solid fa-chalkboard-user"></i> Teachers</a></li>
+                    <li><a href="#" data-view="schedules"><i class="fa-solid fa-calendar-days"></i> Schedules</a></li>
+                    <li><a href="#" data-view="yoga"><i class="fa-solid fa-om"></i> Yoga Guidance</a></li>
+                    <li><a href="#" data-view="faqs"><i class="fa-solid fa-circle-question"></i> FAQs</a></li>
+                    <li><a href="#" data-view="leads"><i class="fa-solid fa-address-book"></i> Contact Leads</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="btn btn-icon" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+                <a href="/" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 10px;">View Chatbot</a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="topbar">
+                <h1 id="page-title">Dashboard</h1>
+                <div class="topbar-actions">
+                    <button id="preview-btn" class="btn btn-secondary hidden"><i class="fa-solid fa-eye"></i> Preview</button>
+                    <button id="save-btn" class="btn btn-primary hidden"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+                    <a href="/admin/" class="user-badge" style="text-decoration: none; color: inherit;"><i class="fa-solid fa-user-shield"></i> Django Admin</a>
+                </div>
+            </header>
+            
+            <div id="content-area" class="content-body">
+                <!-- Dashboard content injected here -->
+            </div>
+
+            <!-- Unified Editor Area (Hidden on Dashboard) -->
+            <div id="editor-container" class="hidden" style="display: flex; flex-direction: column; height: 100%; padding: 20px;">
+                <p style="margin-bottom: 15px; color: var(--text-secondary);">
+                    Paste all the knowledge base content for this module below. The AI will intelligently search and extract specific facts when answering user questions.
+                </p>
+                <div id="quill-editor" style="flex: 1; background: var(--glass-bg); border-radius: 8px;"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="preview-modal" class="modal hidden">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>Knowledge Base Preview</h2>
+                <button class="close-modal" id="close-preview"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body ql-editor" id="preview-content" style="max-height: 60vh; overflow-y: auto;">
+                <!-- HTML rendered here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="close-preview-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="/static/admin/js/admin.js"></script>
+</body>
+</html>
