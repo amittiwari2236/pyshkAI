@@ -31,6 +31,7 @@ def generate_response(prompt, current_context=None):
         logger.info("Attempting to generate response using OpenAI (Fallback).")
         return openai_generate(prompt, db_context, current_context)
     except Exception as openai_err:
-        logger.error(f"OpenAI generation failed: {openai_err}. Both providers unavailable.")
-        return "Sorry, the AI service is temporarily unavailable. Please try again in a few moments."
+        logger.error(f"OpenAI generation failed: {openai_err}. Both AI formatters unavailable.")
+        # FINAL FALLBACK: 100% AI-FREE. Return the raw database text directly!
+        return f"*(Formatting service busy. Showing direct database results:)*\n\n{db_context}"
 
