@@ -29,8 +29,8 @@ def generate_response(prompt, context_text="", current_context=None):
 
     # Instruct the AI to ask a follow-up if we have a current topic
     modified_prompt = prompt
-    if current_topic:
-        modified_prompt = f"{prompt}\n\n[Instruction: End your response by asking: 'Would you like more details on this topic or have another question about {current_topic}?']"
+    if current_context:
+        modified_prompt = f"{prompt}\n\n[Instruction: End your response by asking: 'Would you like more details on this topic or have another question about {current_context}?']"
 
     try:
         logger.info("Attempting to generate response using Google Gemini (Primary).")
