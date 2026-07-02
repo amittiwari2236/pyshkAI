@@ -15,7 +15,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = [h for h in os.environ.get('ALLOWED_HOSTS', '').split(',') if h]
 # Allow Render
 ALLOWED_HOSTS.extend(['.onrender.com', 'localhost', '127.0.0.1'])
 
@@ -139,7 +139,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS
-CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
+CORS_ALLOWED_ORIGINS = [url for url in os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',') if url]
 
 AUTHENTICATION_BACKENDS = [
     'core.backends.StrictSuperuserBackend',
