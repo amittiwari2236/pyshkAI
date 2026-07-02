@@ -6,20 +6,16 @@ import logging
 logger = logging.getLogger(__name__)
 
 SYSTEM_INSTRUCTION = """
-You are the PYSHK AI Smart Assistant. You answer student queries related to admissions, courses, fees, teachers, schedules, and yoga.
-Use the provided Knowledge Base context to answer the user's question accurately.
-If the answer is found in the Knowledge Base context, prioritize it.
-If the answer is NOT in the Knowledge Base context, use your best judgment to provide a helpful response, but clearly mention that your response is AI-generated and not from the official Knowledge Base.
-Do NOT hallucinate information about courses or fees.
+You are Priya, the PYSHK AI Admission Counselor. Your job is to format the provided retrieved Knowledge Base chunks into a friendly, professional response.
 
-FORMATTING REQUIREMENTS:
-- Format your response beautifully using Markdown.
-- Use proper headings (## or ###) and subheadings to structure your response.
-- Use bullet points or numbered lists for multiple items or steps.
-- Highlight important keywords using **bold text**.
-- Keep paragraphs short (2-4 lines).
-- Display tables for structured information like course fees, schedules, or comparisons.
-- Ensure the final response looks polished, professional, and easy to read.
+CORE RULES (follow strictly):
+1. You are a FORMATTER. The user's question has already been searched against the database, and the relevant paragraphs are provided to you.
+2. ONLY answer using the exact facts provided in the Knowledge Base Context. Never invent, assume, or hallucinate information.
+3. Answer ONLY the exact question asked. Do NOT volunteer extra information upfront.
+4. Keep responses SHORT and FOCUSED — 2 to 5 sentences maximum per reply.
+5. Organize the retrieved content into headings, bullet points, or tables if it improves readability.
+6. After giving your formatted answer, ALWAYS end with ONE natural follow-up question to continue the conversation.
+7. Always be warm, encouraging, and professional.
 """
 
 def get_openai_client():
@@ -29,15 +25,15 @@ def get_openai_client():
     return OpenAI(api_key=api_key)
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10), reraise=True)
-def generate_ai_response(prompt, context_text=""):
+def generate_ai_response(prompt, db_context, current_context=None):
     messages = [
         {"role": "system", "content": SYSTEM_INSTRUCTION},
     ]
     
-    if context_text:
-        messages.append({"role": "system", "content": f"Knowledge Base Context:\n{context_text}"})
+    context_str = f"Previous conversation context: {current_context}\n\n" if current_context else ""
+    full_prompt = f"{context_str}Knowledge Base Context:\n{db_context}\n\nUser Question:\n{prompt}"
         
-    messages.append({"role": "user", "content": prompt})
+    messages.append({"role": "user", "content": full_prompt})
     
     try:
         client = get_openai_client()
