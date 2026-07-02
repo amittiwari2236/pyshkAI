@@ -4,7 +4,7 @@ from services.openai_service import generate_ai_response as openai_generate
 
 logger = logging.getLogger(__name__)
 
-def generate_response(prompt, context_text="", current_topic=None):
+def generate_response(prompt, context_text="", current_context=None):
     """
     Unified AI router. Prioritizes Gemini.
     Falls back to OpenAI on failure.
@@ -14,7 +14,7 @@ def generate_response(prompt, context_text="", current_topic=None):
     from services.search_service import search_knowledge_base
     
     # 1. Search the database for the user's query
-    db_context = search_knowledge_base(prompt, session_topic=current_topic)
+    db_context = search_knowledge_base(prompt, session_context=current_context)
     
     # 2. If nothing is found in the database, refuse to answer
     if not db_context:

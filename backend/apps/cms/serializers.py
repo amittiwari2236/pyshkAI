@@ -52,8 +52,9 @@ class YogaGuidanceSerializer(serializers.ModelSerializer):
         model = YogaGuidance
         fields = '__all__'
 
-from apps.knowledge.models import UnifiedKnowledge
-class UnifiedKnowledgeSerializer(serializers.ModelSerializer):
+from apps.knowledge.models import CentralKnowledge
+
+class CentralKnowledgeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UnifiedKnowledge
+        model = CentralKnowledge
         fields = '__all__'

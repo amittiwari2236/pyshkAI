@@ -6,7 +6,7 @@ class ChatSession(BaseModel):
     session_token = models.CharField(max_length=255, unique=True, db_index=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
     language = models.CharField(max_length=10, default='en')
-    current_topic = models.CharField(max_length=100, null=True, blank=True)
+    current_context = models.CharField(max_length=255, null=True, blank=True)
     
     def __str__(self):
         return f"Session {self.session_token}"

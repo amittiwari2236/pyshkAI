@@ -38,7 +38,7 @@ router.register(r'faqs', FAQViewSet, basename='faqs')
 
 cms_router = DefaultRouter()
 from apps.cms.views import (
-    UnifiedKnowledgeAPIView,
+    CentralKnowledgeAPIView,
     CourseViewSet as CMSCourseViewSet,
     FeeStructureViewSet as CMSFeeStructureViewSet,
     AdmissionViewSet as CMSAdmissionViewSet,
@@ -79,7 +79,7 @@ urlpatterns = [
     # CMS APIs
     path('api/cms/dashboard/', dashboard_analytics, name='cms_dashboard'),
     path('api/cms/', include(cms_router.urls)),
-    path('api/cms/unified-knowledge/<str:module_name>/', UnifiedKnowledgeAPIView.as_view(), name='unified_knowledge'),
+    path('api/cms/central-knowledge/', CentralKnowledgeAPIView.as_view(), name='central_knowledge'),
     
     # CMS Frontend App
     path('cms/', TemplateView.as_view(template_name='admin/index.html'), name='cms_frontend'),

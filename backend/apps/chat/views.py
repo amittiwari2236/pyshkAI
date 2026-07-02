@@ -44,7 +44,7 @@ class ChatViewSet(viewsets.ModelViewSet):
         content_lower = content.strip().lower()
         if content_lower in ['no', 'nope', 'nah', 'not really']:
             # User wants to end the context
-            session.current_topic = None
+            session.current_context = None
             session.save()
             ai_response_text = "Thank you! Have a great day! Let me know if you have any other questions."
             ai_message = ChatMessage.objects.create(session=session, sender='AI', content=ai_response_text)
@@ -56,17 +56,17 @@ class ChatViewSet(viewsets.ModelViewSet):
         # Generate AI response using RAG + Multi-Provider AI Router
         from services.rag_engine import retrieve_context
         from services.ai_router import generate_response
-        from services.search_service import extract_topic
+        from services.search_service import get_new_context
         
         context_text = retrieve_context(content)
         
         # Update topic if a new one is detected, otherwise keep the existing one
-        extracted_topic = extract_topic(content)
-        if extracted_topic:
-            session.current_topic = extracted_topic
+        extracted_context = get_new_context(content, session.current_context)
+        if extracted_context:
+            session.current_context = extracted_context
             session.save()
             
-        ai_response_text = generate_response(prompt=content, context_text=context_text, current_topic=session.current_topic)
+        ai_response_text = generate_response(prompt=content, context_text=context_text, current_context=session.current_context)
         
         # Save AI message
         ai_message = ChatMessage.objects.create(session=session, sender='AI', content=ai_response_text)

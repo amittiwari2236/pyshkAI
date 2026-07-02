@@ -36,12 +36,11 @@ class YogaGuidance(BaseModel):
     def __str__(self):
         return self.topic
 
-class UnifiedKnowledge(BaseModel):
+class CentralKnowledge(BaseModel):
     """
-    Stores the unified, unstructured rich text content for a specific CMS module.
+    Stores the single, unified, unstructured rich text content for the entire Knowledge Base.
     """
-    module_name = models.CharField(max_length=100, unique=True, db_index=True)
     content = models.TextField(blank=True, default='')
     
     def __str__(self):
-        return f"Unified Knowledge: {self.module_name}"
+        return "Central Knowledge Base"

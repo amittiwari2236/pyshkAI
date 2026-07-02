@@ -81,26 +81,28 @@ def dashboard_analytics(request):
 
 from rest_framework.views import APIView
 from rest_framework import status
-from apps.knowledge.models import UnifiedKnowledge
-from .serializers import UnifiedKnowledgeSerializer
+from apps.knowledge.models import CentralKnowledge
 
-class UnifiedKnowledgeAPIView(APIView):
+class CentralKnowledgeAPIView(APIView):
     authentication_classes = [CsrfExemptSessionAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, module_name):
+    def get(self, request):
         try:
-            knowledge = UnifiedKnowledge.objects.get(module_name=module_name)
-            serializer = UnifiedKnowledgeSerializer(knowledge)
-            return Response(serializer.data)
-        except UnifiedKnowledge.DoesNotExist:
-            return Response({'module_name': module_name, 'content': ''})
+            knowledge = CentralKnowledge.objects.first()
+            if knowledge:
+                return Response({'content': knowledge.content})
+            return Response({'content': ''})
+        except CentralKnowledge.DoesNotExist:
+            return Response({'content': ''})
 
-    def post(self, request, module_name):
+    def post(self, request):
         content = request.data.get('content', '')
-        knowledge, created = UnifiedKnowledge.objects.update_or_create(
-            module_name=module_name,
-            defaults={'content': content}
-        )
-        serializer = UnifiedKnowledgeSerializer(knowledge)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        knowledge = CentralKnowledge.objects.first()
+        if knowledge:
+            knowledge.content = content
+            knowledge.save()
+        else:
+            knowledge = CentralKnowledge.objects.create(content=content)
+            
+        return Response({'content': knowledge.content}, status=status.HTTP_200_OK)
