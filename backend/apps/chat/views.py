@@ -53,20 +53,23 @@ class ChatViewSet(viewsets.ModelViewSet):
                 'ai_response': ChatMessageSerializer(ai_message).data
             })
             
-        # Generate AI response using RAG + Multi-Provider AI Router
-        from services.rag_engine import retrieve_context
+        # Generate AI response using single API call
         from services.ai_router import generate_response
-        from services.search_service import get_new_context
         
-        context_text = retrieve_context(content)
-        
-        # Update topic if a new one is detected, otherwise keep the existing one
-        extracted_context = get_new_context(content, session.current_context)
-        if extracted_context:
-            session.current_context = extracted_context
+        # Simple fast local context tracking (No API cost)
+        content_lower = content.lower()
+        topics = ['course', 'admission', 'fee', 'teacher', 'schedule', 'yoga', 'certif', 'contact']
+        detected = None
+        for t in topics:
+            if t in content_lower:
+                detected = t
+                break
+                
+        if detected:
+            session.current_context = detected
             session.save()
             
-        ai_response_text = generate_response(prompt=content, context_text=context_text, current_context=session.current_context)
+        ai_response_text = generate_response(prompt=content, current_context=session.current_context)
         
         # Save AI message
         ai_message = ChatMessage.objects.create(session=session, sender='AI', content=ai_response_text)
