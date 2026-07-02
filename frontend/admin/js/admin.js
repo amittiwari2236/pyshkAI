@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE = '/api/cms/unified-knowledge';
+    const API_BASE = '/api/cms/central-knowledge';
     let currentView = 'dashboard';
     let unifiedQuill = null;
 
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchKnowledge(module) {
         try {
-            const res = await fetch(`${API_BASE}/${module}/`, {
+            const res = await fetch(`${API_BASE}/`, {
                 headers: getHeaders()
             });
             if (res.status === 401 || res.status === 403) {
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
 
         try {
-            const res = await fetch(`${API_BASE}/${currentView}/`, {
+            const res = await fetch(`${API_BASE}/`, {
                 method: 'POST',
                 headers: getHeaders(),
                 body: JSON.stringify({ content })
